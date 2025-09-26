@@ -1,11 +1,14 @@
 package com.tfg.model;
 
+import com.tfg.model.enumerados.EstadoCuenta;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -21,17 +24,19 @@ import java.util.UUID;
 )
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING, length = 20)
-@Getter @Setter @NoArgsConstructor @EqualsAndHashCode(callSuper=false)
+@Getter @Setter @NoArgsConstructor(access = AccessLevel.PROTECTED) @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
+@SuperBuilder
 public abstract class Usuario {
 
-    // PK técnica: generada por secuencia
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_usuario")
     @SequenceGenerator(name = "seq_usuario", sequenceName = "seq_usuario", allocationSize = 1)
     private Long id;
 
-    // ID público del diagrama (UUID)
+    @EqualsAndHashCode.Include
     @Column(name = "public_id", nullable = false, updatable = false, columnDefinition = "uuid")
+    @Builder.Default
     private UUID publicId = UUID.randomUUID();
 
     @NotBlank @Size(max = 80)
@@ -44,28 +49,34 @@ public abstract class Usuario {
     private LocalDate fechaNacimiento;
 
     @Size(max = 20)
+    @NotBlank
     private String telefono;
 
-    @Email @NotBlank @Size(max = 150)
-    private String email;
-
-    @NotBlank @Size(min = 8, max = 16)
+    @NotBlank
+    @Size(max = 16, min = 8)
+    @Column(nullable = false, length = 16)
     private String nif;
 
+    @Email
+    @NotBlank
+    @Size(max = 150)
+    @Column(nullable = false, length = 150)
+    private String email;
+
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 15)
+    @Column(nullable = false, length = 40)
+    @Builder.Default
     private EstadoCuenta estadoCuenta = EstadoCuenta.ACTIVO;
 
     private LocalDateTime ultimoAcceso;
 
     @CreationTimestamp
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime creadoEn;
+    @Column(name = "creado_en", updatable = false)
+    private Instant creadoEn;
 
     @UpdateTimestamp
-    @Column(nullable = false)
-    private LocalDateTime actualizadoEn;
+    @Column(name = "actualizado_en")
+    private Instant actualizadoEn;
 
-    @Version
-    private Long version;
+
 }

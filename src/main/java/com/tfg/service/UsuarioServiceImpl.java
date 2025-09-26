@@ -1,8 +1,6 @@
 package com.tfg.service;
-import com.tfg.model.Paciente;
 import com.tfg.model.Usuario;
-import com.tfg.repository.UsuarioRepositorio;
-import com.tfg.service.UsuarioService;
+import com.tfg.repository.UsuarioRepository;
 import com.tfg.service.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,16 +8,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
 @Transactional
 public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
-    private final UsuarioRepositorio usuarioRepo;
+    private final UsuarioRepository usuarioRepo;
 
-    public UsuarioServiceImpl(UsuarioRepositorio usuarioRepo) {
+    public UsuarioServiceImpl(UsuarioRepository usuarioRepo) {
         this.usuarioRepo = usuarioRepo;
     }
 

@@ -1,7 +1,7 @@
 package com.tfg.service;
 
 import com.tfg.model.Empleado;
-import com.tfg.model.RolEmpleado;
+import com.tfg.model.enumerados.RolEmpleado;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

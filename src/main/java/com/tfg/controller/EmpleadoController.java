@@ -1,7 +1,7 @@
 package com.tfg.controller;
 
 import com.tfg.model.Empleado;
-import com.tfg.model.RolEmpleado;
+import com.tfg.model.enumerados.RolEmpleado;
 import com.tfg.service.EmpleadoService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;

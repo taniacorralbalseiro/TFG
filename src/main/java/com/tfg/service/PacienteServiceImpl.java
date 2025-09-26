@@ -1,9 +1,8 @@
 package com.tfg.service;
 
 import com.tfg.model.Paciente;
-import com.tfg.repository.PacienteRepositorio;
-import com.tfg.repository.UsuarioRepositorio;
-import com.tfg.service.PacienteService;
+import com.tfg.repository.PacienteRepository;
+import com.tfg.repository.UsuarioRepository;
 import com.tfg.service.exceptions.ConflictException;
 import com.tfg.service.exceptions.NotFoundException;
 import org.springframework.data.domain.Page;
@@ -17,10 +16,10 @@ import java.util.UUID;
 @Transactional
 public class PacienteServiceImpl implements PacienteService {
 
-    private final PacienteRepositorio pacienteRepo;
-    private final UsuarioRepositorio usuarioRepo;
+    private final PacienteRepository pacienteRepo;
+    private final UsuarioRepository usuarioRepo;
 
-    public PacienteServiceImpl(PacienteRepositorio pacienteRepo, UsuarioRepositorio usuarioRepo) {
+    public PacienteServiceImpl(PacienteRepository pacienteRepo, UsuarioRepository usuarioRepo) {
         this.pacienteRepo = pacienteRepo;
         this.usuarioRepo = usuarioRepo;
     }
@@ -63,10 +62,10 @@ public class PacienteServiceImpl implements PacienteService {
         p.setFechaNacimiento(cambios.getFechaNacimiento());
         p.setEstadoCuenta(cambios.getEstadoCuenta());
         // Específicos Paciente:
-        p.setNivelCognitivo(cambios.getNivelCognitivo());
+       /* p.setNivelCognitivo(cambios.getNivelCognitivo());
         p.setAlergias(cambios.getAlergias());
         p.setCentroId(cambios.getCentroId());
-        p.setGrupoId(cambios.getGrupoId());
+        p.setGrupoId(cambios.getGrupoId());*/
         return pacienteRepo.save(p);
     }
 

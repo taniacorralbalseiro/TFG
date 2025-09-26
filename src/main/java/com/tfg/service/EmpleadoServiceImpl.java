@@ -2,10 +2,9 @@ package com.tfg.service;
 
 
 import com.tfg.model.Empleado;
-import com.tfg.model.RolEmpleado;
-import com.tfg.repository.EmpleadoRepositorio;
-import com.tfg.repository.UsuarioRepositorio;
-import com.tfg.service.EmpleadoService;
+import com.tfg.model.enumerados.RolEmpleado;
+import com.tfg.repository.EmpleadoRepository;
+import com.tfg.repository.UsuarioRepository;
 import com.tfg.service.exceptions.ConflictException;
 import com.tfg.service.exceptions.NotFoundException;
 import org.springframework.data.domain.Page;
@@ -19,10 +18,10 @@ import java.util.UUID;
 @Transactional
 public class EmpleadoServiceImpl implements EmpleadoService {
 
-    private final EmpleadoRepositorio empleadoRepo;
-    private final UsuarioRepositorio usuarioRepo;
+    private final EmpleadoRepository empleadoRepo;
+    private final UsuarioRepository usuarioRepo;
 
-    public EmpleadoServiceImpl(EmpleadoRepositorio empleadoRepo, UsuarioRepositorio usuarioRepo) {
+    public EmpleadoServiceImpl(EmpleadoRepository empleadoRepo, UsuarioRepository usuarioRepo) {
         this.empleadoRepo = empleadoRepo;
         this.usuarioRepo = usuarioRepo;
     }
@@ -70,7 +69,6 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         e.setSalario(cambios.getSalario());
         e.setRol(cambios.getRol());
         e.setEstado(cambios.getEstado());
-        e.setCentroId(cambios.getCentroId());
         return empleadoRepo.save(e);
     }
 
